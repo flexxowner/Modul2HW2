@@ -8,20 +8,21 @@ namespace Modul2_HW2
 {
     class Starter
     {
-        List<Basket> BasketList = new List<Basket>()
+        List<Products> ProductsList = new List<Products>()
         {
-            new Basket() {Product = "potato",Price = 45},
-            new Basket() {Product = "orange",Price = 56},
-            new Basket() {Product = "tomato",Price = 30},
-            new Basket() {Product = "apple",Price = 25},
+            new Products() {Product = "potato",Price = 45},
+            new Products() {Product = "orange",Price = 56},
+            new Products() {Product = "tomato",Price = 30},
+            new Products() {Product = "apple",Price = 25},
         };
         Basket basket = new Basket();
         Order order = new Order();
+        Random random = new Random();
         public void Run()
         {
-            basket.AddList(BasketList);
+            basket.AddList(ProductsList);
             StringBuilder builder = new StringBuilder();
-            foreach (var item in basket.ProductList)
+            foreach (var item in basket.BasketList)
             {
                 builder.Append($"{item.Product} ");
             }
@@ -33,7 +34,7 @@ namespace Modul2_HW2
             if (answer == "yes")
             {
                 order.Status = true;
-                order.AddOrder(basket.ProductList);
+                order.AddOrder(basket.BasketList);
                 order.TotalPrice(order.ProductList);
                 StringBuilder builder1 = new StringBuilder();
                 foreach (var item in order.ProductList)
@@ -41,7 +42,7 @@ namespace Modul2_HW2
                     builder1.Append($"{item.Product} ");
                 }
                 string orderList = builder1.ToString();
-                Console.WriteLine($"Products ordered: {orderList}");
+                Console.WriteLine($"Your check number {random.Next(1,100)}: Products ordered: {orderList}");
                 Console.WriteLine($"Total:{order.TotalPrice(order.ProductList)}");
             }
             else if (answer == "not")
