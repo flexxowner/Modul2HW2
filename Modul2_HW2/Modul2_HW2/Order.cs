@@ -8,24 +8,22 @@ namespace Modul2_HW2
 {
     class Order
     {
-        public Basket OrderStatusTrue()
+        public string Product { set; get; }
+        public decimal Price { set; get; }
+
+        public bool Status { set; get; }
+
+        public List<Order> ProductList = new List<Order>(9);
+        public List<Order> AddOrder(List<Basket> data)
         {
-            return new Basket(true);
-        }
-        public Basket OrderStatusFalse()
-        {
-            return new Basket(false);
-        }
-        public string OrderInfo(List<Products> data)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (var item in data)
+            for (int i = 0; i < 9; i++)
             {
-                stringBuilder.Append($"{item.Product} ");
+                ProductList.Add(new Order() { Product = data[i].Product, Price = data[i].Price });
             }
-            return stringBuilder.ToString();
+            return ProductList;
         }
-        public decimal TotalPrice(List<Products> data)
+
+        public decimal TotalPrice(List<Order> data)
         {
             decimal summa = 0;
             for (int i = 0; i < data.Count; i++)

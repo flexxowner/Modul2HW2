@@ -8,59 +8,46 @@ namespace Modul2_HW2
 {
     class Starter
     {
-        List<Products> ProductList = new List<Products>()
+        List<Basket> BasketList = new List<Basket>()
         {
-            new Products() {Product = "potato",Price = 45},
-            new Products() {Product = "orange",Price = 56},
-            new Products() {Product = "tomato",Price = 30},
-            new Products() {Product = "apple",Price = 25},
+            new Basket() {Product = "potato",Price = 45},
+            new Basket() {Product = "orange",Price = 56},
+            new Basket() {Product = "tomato",Price = 30},
+            new Basket() {Product = "apple",Price = 25},
         };
-        List<Products> ProductsToBuy = new List<Products>(9);
-        Random random = new Random();
+        Basket basket = new Basket();
         Order order = new Order();
         public void Run()
         {
-            Basket basket;
-            for (int i = 0; i < 9; i++)
+            basket.AddList(BasketList);
+            StringBuilder builder = new StringBuilder();
+            foreach (var item in basket.ProductList)
             {
-                var Index = random.Next(1, 5);
-                if (Index == 1)
-                {
-                    ProductsToBuy.Add(ProductList[0]);
-                }
-                else if (Index == 2)
-                {
-                    ProductsToBuy.Add(ProductList[1]);
-                }
-                else if (Index == 3)
-                {
-                    ProductsToBuy.Add(ProductList[2]);
-                }
-                else if (Index == 4)
-                {
-                    ProductsToBuy.Add(ProductList[3]);
-                }
+                builder.Append($"{item.Product} ");
             }
-            var data = ProductsToBuy;
-            Console.WriteLine($"Products in the basket: {Basket.BasketInfo(data)}");
+            string products = builder.ToString();
+            Console.WriteLine($"Products in the Basket:{products}");
             Console.WriteLine("Do you want to place an order?");
             Console.WriteLine("Please, input yes or not");
             var answer = Console.ReadLine();
             if (answer == "yes")
             {
-                basket = order.OrderStatusTrue();
-                if (basket?.Status == true)
+                order.Status = true;
+                order.AddOrder(basket.ProductList);
+                order.TotalPrice(order.ProductList);
+                StringBuilder builder1 = new StringBuilder();
+                foreach (var item in order.ProductList)
                 {
-                    Console.WriteLine($"Your order № {random.Next(1, 101)}:{order.OrderInfo(ProductsToBuy)}, total price:{order.TotalPrice(ProductsToBuy)}");
+                    builder1.Append($"{item.Product} ");
                 }
+                string orderList = builder1.ToString();
+                Console.WriteLine($"Products ordered: {orderList}");
+                Console.WriteLine($"Total:{order.TotalPrice(order.ProductList)}");
             }
             else if (answer == "not")
             {
-                basket = order.OrderStatusFalse();
-                if (basket?.Status == false)
-                {
-                    Console.WriteLine("Order not generated");
-                }
+                order.Status = false;
+                Console.WriteLine("Order not generated");
             }
 
         }

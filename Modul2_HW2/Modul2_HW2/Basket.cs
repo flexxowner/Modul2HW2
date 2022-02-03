@@ -9,20 +9,35 @@ namespace Modul2_HW2
     class Basket
     {
 
-        public bool Status { get; }
+        public string Product { set; get; }
+        public decimal Price { set; get; }
 
-        public Basket(bool status)
+        public List<Basket> ProductList = new List<Basket>(9);
+        public List<Basket> AddList(List<Basket> productsList)
         {
-            Status = status;
-        }
-        public static string BasketInfo(List<Products> data)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (var item in data)
+            Random random = new Random();
+            for (int i = 0; i < 9; i++)
             {
-                stringBuilder.Append($"{item.Product} ");
+                var Index = random.Next(1, 5);
+                if (Index == 1)
+                {
+                    ProductList.Add(productsList[0]);
+                }
+                else if (Index == 2)
+                {
+                    ProductList.Add(productsList[1]);
+                }
+                else if (Index == 3)
+                {
+                    ProductList.Add(productsList[2]);
+                }
+                else if (Index == 4)
+                {
+                    ProductList.Add(productsList[3]);
+                }
             }
-            return stringBuilder.ToString();
+            return ProductList;
         }
+
     }
 }
